@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {loginUser} from "../api/Login.js";
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./css/Login.css"
 
 export default function Login() {
@@ -8,6 +9,8 @@ export default function Login() {
         email: "",
         password: ""
     });
+
+    const navigate = useNavigate();
 
     const [message, setMessage] = useState("");
 
@@ -18,10 +21,20 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!form.email) {
+            setMessage("Please Fill In All Fields");
+            return;
+        }
+        if (!form.password) {
+            setMessage("Please Fill In All Fields");
+            return;
+        }
+
         const res = await loginUser(form);
 
         if (res.status) {
             setMessage("Login successful!");
+            navigate("/employeeManagement");
         } else {
             setMessage(res.message || "Login failed");
         }

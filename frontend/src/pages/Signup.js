@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {signupUser} from "../api/Signup";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./css/Signup.css";
 
 export default function Signup() {
@@ -9,6 +10,8 @@ export default function Signup() {
         email: "",
         password: ""
     });
+
+    const navigate = useNavigate();
 
     const [message, setMessage] = useState("");
 
@@ -19,10 +22,24 @@ export default function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!form.username) {
+            setMessage("Please Fill In All Fields");
+            return;
+        }
+        if (!form.email) {
+            setMessage("Please Fill In All Fields");
+            return;
+        }
+        if (!form.password) {
+            setMessage("Please Fill In All Fields");
+            return;
+        }
+
         const res = await signupUser(form);
 
         if (res.status) {
             setMessage("Signup successful!");
+            navigate("/");
         } else {
             setMessage(res.message || "Error signing up");
         }
