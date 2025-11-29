@@ -41,13 +41,3 @@
     color: lightgrey;
     transition: all 0.3s ease;
 }
-
-.signup-card button:hover {
-    background: blue;
-}
-
-.signup-card .message {
-    margin-top: 15px;
-    font-size: 14px;
-    color: red;
-}
