@@ -6,10 +6,11 @@ require("dotenv").config();
 
 const app = express();
 
+const SERVER_PORT = process.env.SERVER_PORT || 3001;
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 app.use("/api/v1", usersRoutes);
 app.use("/api/v1", employeesRoutes);
@@ -18,12 +19,14 @@ app.get("/", (req, res) => {
     res.send("<h1>COMP3123 Assignment 1</h1>");
 });
 
-mongoose
-    .connect(DB_CONNECTION_STRING, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+mongoose.connect(DB_CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("MongoDB Connected!")
+    app.listen(SERVER_PORT, () => {
+        console.log(`Server running at http://localhost:${SERVER_PORT}/`)
     })
-    .then(() => console.log("MongoDB Connected!"))
-    .catch((err) => console.error(err));
-
-module.exports = app;
+}).catch(err => {
+    console.log(err)
+})
