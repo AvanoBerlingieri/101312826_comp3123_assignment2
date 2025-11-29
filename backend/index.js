@@ -3,12 +3,14 @@ const usersRoutes = require("./routes/users");
 const employeesRoutes = require("./routes/employees");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
