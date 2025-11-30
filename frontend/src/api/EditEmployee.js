@@ -1,13 +1,13 @@
+import axios from "axios";
+
 const API = process.env.REACT_APP_API_URL;
 
 export async function editEmp(id, employeeData) {
-    const res = await fetch(`${API}/emp/employees/${id}`, {
-        method: "PUT",
+    const res = await axios.put(`${API}/emp/employees/${id}`, employeeData, {
+        withCredentials: true,
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(employeeData)
     });
-
-    return res.json();
+    return res.data;
 }

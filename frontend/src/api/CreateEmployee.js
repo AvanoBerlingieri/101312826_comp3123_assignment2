@@ -1,10 +1,14 @@
+import axios from "axios";
+
 const API = process.env.REACT_APP_API_URL;
 
 export async function createEmp(data) {
-    const res = await fetch(`${API}/emp/employees`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+    const res = await axios.post(`${API}/emp/employees`, data, {
+        withCredentials: true,
+        headers: {
+            "Content-Type": "application/json",
+        },
     });
-    return res.json();
+    return res.data;
+
 }
