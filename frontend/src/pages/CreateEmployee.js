@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import EmployeeForm from "../components/EmployeeForm";
-import {Link} from "react-router-dom";
 import {createEmp} from "../api/CreateEmployee.js";
 import "./css/CreateEmployee.css"
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {data, Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {deleteEmp} from "../api/DeleteEmployee";
 import "./css/EmployeeManagement.css";
 import {getEmp} from "../api/GetEmployees";
@@ -20,10 +20,12 @@ export default function EmployeeManagement() {
         if (!window.confirm("Are you sure you want to delete this employee?")) return;
 
         try {
-            const res = deleteEmp(data)
+            const res = await deleteEmp(id);
 
-            if (res.ok) {
-                setEmployees(employees.filter(emp => emp.id !== id));
+            if (res.status) {
+                setEmployees(employees.filter(emp => emp._id !== id));
+            } else {
+                console.error("Failed to delete employee");
             }
         } catch (err) {
             console.error(err);
@@ -53,9 +55,13 @@ export default function EmployeeManagement() {
                         <td>{emp.last_name}</td>
                         <td>{emp.email}</td>
                         <td>
-                            <button className={"viewBtn"} onClick={() => navigate(`/employees/${emp._id || emp.id}`)}>View</button>
-                            <button className={"editBtn"} onClick={() => navigate(`/employeeManagement/editEmployee/${emp._id || emp.id}`)}>Edit</button>
-                            <button className={"delBtn"} onClick={() => handleDelete(emp.id)}>Delete</button>
+                            <button className={"viewBtn"}
+                                    onClick={() => navigate(`/employees/${emp._id || emp.id}`)}>View
+                            </button>
+                            <button className={"editBtn"}
+                                    onClick={() => navigate(`/employeeManagement/editEmployee/${emp._id || emp.id}`)}>Edit
+                            </button>
+                            <button className={"delBtn"} onClick={() => handleDelete(emp._id || emp.id)}>Delete</button>
                         </td>
                     </tr>
                 ))}
