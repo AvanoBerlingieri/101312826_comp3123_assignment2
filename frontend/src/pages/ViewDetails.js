@@ -23,6 +23,9 @@ export default function ViewDetails() {
     // show error
     if (error) return <p>{error}</p>;
 
+    // loading
+    if (!employee) return <p>Loading...</p>;
+
     return (
         <div className="view-employee-container">
             <div className="view-employee-card">
