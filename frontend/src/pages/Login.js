@@ -5,22 +5,28 @@ import {useNavigate} from "react-router-dom";
 import "./css/Login.css"
 
 export default function Login() {
+    // State to hold form input values
     const [form, setForm] = useState({
         email: "",
         password: ""
     });
 
+    // hooks for navigation
     const navigate = useNavigate();
 
+    // to set messages
     const [message, setMessage] = useState("");
 
+    // Handle changes in input fields
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value});
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // client side validation
         if (!form.email) {
             setMessage("Please Fill In All Fields");
             return;
@@ -30,9 +36,11 @@ export default function Login() {
             return;
         }
 
+        // api call to login user
         const res = await loginUser(form);
 
         if (res.status) {
+            // If login is successful, show message and navigate to employee management page
             setMessage("Login successful!");
             navigate("/employeeManagement");
         } else {

@@ -4,18 +4,24 @@ import { getEmpById } from "../api/GetEmployeeById";
 import "./css/ViewDetails.css";
 
 export default function ViewDetails() {
+    // Get employee id from url params
     const { id } = useParams();
+
+    // state to hold employee data
     const [employee, setEmployee] = useState(null);
+
+    // state to hold any errors
     const [error, setError] = useState("");
 
+    // get employee details
     useEffect(() => {
         getEmpById(id)
-            .then(data => setEmployee(data.employee))
+            .then(data => setEmployee(data.employee))// set employee data to state
             .catch(err => setError(err.message));
     }, [id]);
 
+    // show error
     if (error) return <p>{error}</p>;
-    if (!employee) return <p>Loading...</p>;
 
     return (
         <div className="view-employee-container">

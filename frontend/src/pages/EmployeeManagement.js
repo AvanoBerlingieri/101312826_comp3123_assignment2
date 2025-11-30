@@ -5,24 +5,33 @@ import "./css/EmployeeManagement.css";
 import {getEmp} from "../api/GetEmployees";
 
 export default function EmployeeManagement() {
+    // State to hold the list of employees
     const [employees, setEmployees] = useState([]);
+
+    // navigation hook to go to other pages
     const navigate = useNavigate();
 
+    // get all employees when page
     useEffect(() => {
         getEmp()
             .then(data => {
+                // set employees array or empty array if undefined
                 setEmployees(data.employees || []);
             })
             .catch(err => console.error(err));
     }, []);
 
+    // delete employee
     const handleDelete = async (id) => {
+        // confirmation window
         if (!window.confirm("Are you sure you want to delete this employee?")) return;
 
         try {
+            // api call to delete employee
             const res = await deleteEmp(id);
 
             if (res.status) {
+                // Remove deleted employee from local state to update page
                 setEmployees(employees.filter(emp => emp._id !== id));
             } else {
                 console.error("Failed to delete employee");
@@ -56,12 +65,12 @@ export default function EmployeeManagement() {
                         <td>{emp.email}</td>
                         <td>
                             <button className={"viewBtn"}
-                                    onClick={() => navigate(`/employees/${emp._id || emp.id}`)}>View
+                                    onClick={() => navigate(`/employeeManagement/viewEmployee/${emp._id}`)}>View
                             </button>
                             <button className={"editBtn"}
-                                    onClick={() => navigate(`/employeeManagement/editEmployee/${emp._id || emp.id}`)}>Edit
+                                    onClick={() => navigate(`/employeeManagement/editEmployee/${emp._id}`)}>Edit
                             </button>
-                            <button className={"delBtn"} onClick={() => handleDelete(emp._id || emp.id)}>Delete</button>
+                            <button className={"delBtn"} onClick={() => handleDelete(emp._id)}>Delete</button>
                         </td>
                     </tr>
                 ))}

@@ -5,23 +5,29 @@ import { useNavigate } from "react-router-dom";
 import "./css/Signup.css";
 
 export default function Signup() {
+    // State to hold form input values
     const [form, setForm] = useState({
         username: "",
         email: "",
         password: ""
     });
 
+    // nav hooks
     const navigate = useNavigate();
 
+    // to set messages
     const [message, setMessage] = useState("");
 
+    //handle input change and update state
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value});
     };
 
+    // handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // client side validation
         if (!form.username) {
             setMessage("Please Fill In All Fields");
             return;
@@ -35,9 +41,11 @@ export default function Signup() {
             return;
         }
 
+        // api call to create new user
         const res = await signupUser(form);
 
         if (res.status) {
+            // If signup is successful, show message and move to login page
             setMessage("Signup successful!");
             navigate("/");
         } else {
