@@ -5,10 +5,14 @@ import "./css/EmployeeManagement.css";
 import {getEmp} from "../api/GetEmployees";
 import {logoutUser} from "../api/Logout";
 import {useAuth} from "../context/AuthContext";
+import {searchEmployees} from "../api/SearchEmployees";
 
 export default function EmployeeManagement() {
     // State to hold the list of employees
     const [employees, setEmployees] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchBy, setSearchBy] = useState("department");
+    const [error, setError] = useState("");
 
     const {setAuthenticated, setUser} = useAuth();
 
@@ -24,6 +28,26 @@ export default function EmployeeManagement() {
             })
             .catch(err => console.error(err));
     }, []);
+
+    const handleSearchSubmit = async (e) => {
+        e.preventDefault();
+        if (!searchTerm) {
+            getEmp().then(data => setEmployees(data.employees || []));
+            return;
+        }
+
+        const criteria = {};
+        criteria[searchBy] = searchTerm;
+
+        try {
+            const res = await searchEmployees(criteria);
+            setEmployees(res.employees || []);
+        } catch (err) {
+            console.error(err);
+            setEmployees([]);
+            setError("Error searching employees");
+        }
+    };
 
     const handleLogout = async () => {
         try {
@@ -59,6 +83,23 @@ export default function EmployeeManagement() {
     return (
         <div className="employee-container">
             <h1>Employee Management</h1>
+
+            <form onSubmit={handleSearchSubmit} className="search-form">
+                <select value={searchBy} onChange={(e) => setSearchBy(e.target.value)}>
+                    <option value="department">Department</option>
+                    <option value="position">Position</option>
+                </select>
+                <input
+                    type="text"
+                    placeholder={`Search by ${searchBy}`}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+                <button type="submit">Search</button>
+            </form>
+
+            {error && <p>{error}</p>}
             <Link to="/employeeManagement/createEmployee">
                 <button>Create Employee</button>
             </Link>

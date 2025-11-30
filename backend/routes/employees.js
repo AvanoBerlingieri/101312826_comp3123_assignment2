@@ -6,6 +6,40 @@ const routes = express.Router()
 // all routes require authentication
 routes.use(authGuard);
 
+// Search employees by position or department
+routes.get("/emp/employees/search", (req, res) => {
+    const { department, position } = req.query;
+
+    const query = {};
+    if (department) query.department = department;
+    if (position) query.position = position;
+
+    EmployeesModel.find(query)
+        .then((employees) => {
+            if (!employees || employees.length === 0) {
+                return res.status(404).send({
+                    status: false,
+                    message: "No employees found matching criteria"
+                });
+            }
+
+            res.status(200).send({
+                status: true,
+                message: "Employees found successfully",
+                count: employees.length,
+                employees
+            });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                status: false,
+                message: "Error searching employees",
+                error: err.message
+            });
+        });
+});
+
+
 // get all employees
 routes.get("/emp/employees", (req, res) => {
     EmployeesModel.find().then((employees) => {
