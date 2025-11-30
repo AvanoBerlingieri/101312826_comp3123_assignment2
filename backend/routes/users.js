@@ -1,5 +1,6 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken");
 const UsersModel = require("../models/users")
 const routes = express.Router()
 
@@ -81,6 +82,21 @@ routes.post("/user/login", (req, res) => {
         // check if password matches
         bcrypt.compare(signInData.password, user.password,).then((isMatch) => {
             if (isMatch) {
+                // Create JWT token
+                const token = jwt.sign(
+                    {id: user._id, email: user.email},
+                    process.env.JWT_SECRET,
+                    {expiresIn: "1d"}
+                );
+
+                // Set cookie
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "lax",
+                    maxAge: 24 * 60 * 60 * 1000
+                });
+
                 res.status(200).send({
                     status: true,
                     message: "User logged in successfully",
@@ -110,5 +126,20 @@ routes.post("/user/login", (req, res) => {
         })
     })
 })
+
+routes.get("/user/checkAuth", (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).send({status: false, message: "Not authenticated"});
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).send({status: true, message: "Authenticated", user: decoded});
+    } catch (err) {
+        res.status(401).send({status: false, message: "Invalid token"});
+    }
+});
+
 
 module.exports = routes

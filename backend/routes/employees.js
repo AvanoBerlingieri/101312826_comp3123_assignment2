@@ -1,7 +1,10 @@
 const express = require("express")
 const EmployeesModel = require("../models/employees")
+const { authGuard } = require("../auth/authMiddleware");
 const routes = express.Router()
 
+// all routes require authentication
+routes.use(authGuard);
 
 // get all employees
 routes.get("/emp/employees", (req, res) => {

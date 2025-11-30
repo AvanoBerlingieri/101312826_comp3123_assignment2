@@ -3,6 +3,7 @@ import {loginUser} from "../api/Login.js";
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import "./css/Login.css"
+import {useAuth} from "../context/AuthContext";
 
 export default function Login() {
     // State to hold form input values
@@ -10,6 +11,8 @@ export default function Login() {
         email: "",
         password: ""
     });
+
+    const {setAuthenticated} = useAuth();
 
     // hooks for navigation
     const navigate = useNavigate();
@@ -42,6 +45,7 @@ export default function Login() {
         if (res.status) {
             // If login is successful, show message and navigate to employee management page
             setMessage("Login successful!");
+            setAuthenticated(true);
             navigate("/employeeManagement");
         } else {
             setMessage(res.message || "Login failed");

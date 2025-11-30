@@ -4,13 +4,18 @@ const employeesRoutes = require("./routes/employees");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
