@@ -53,8 +53,8 @@ export default function EmployeeManagement() {
                         <td>{emp.last_name}</td>
                         <td>{emp.email}</td>
                         <td>
-                            <button className={"viewBtn"} onClick={() => navigate(`/employees/${emp._id}`)}>View</button>
-                            <button className={"editBtn"} onClick={() => navigate(`/employees/edit/${emp._id}`)}>Edit</button>
+                            <button className={"viewBtn"} onClick={() => navigate(`/employees/${emp._id || emp.id}`)}>View</button>
+                            <button className={"editBtn"} onClick={() => navigate(`/employeeManagement/editEmployee/${emp._id || emp.id}`)}>Edit</button>
                             <button className={"delBtn"} onClick={() => handleDelete(emp.id)}>Delete</button>
                         </td>
                     </tr>
