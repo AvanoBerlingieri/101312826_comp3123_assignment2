@@ -76,13 +76,13 @@ export default function Signup() {
                         type="password"
                         onChange={handleChange}
                     />
-                    <button type="submit">Sign Up</button>
+                    <button className={"signupBtn"} type="submit">Sign Up</button>
                 </form>
 
                 <div className="login-link">
                     <p>Already have an account?</p>
                     <Link to="/">
-                        <button>Back to Login</button>
+                        <button className={"backBtn"}>Back to Login</button>
                     </Link>
                 </div>
 

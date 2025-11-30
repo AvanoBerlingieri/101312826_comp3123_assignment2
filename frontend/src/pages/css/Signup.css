@@ -23,7 +23,7 @@
 
 .signup-card input {
     width: 90%;
-    padding: 10px;
+    padding: 14px;
     margin: 10px 0;
     border-radius: 8px;
     border: 1px solid grey;
@@ -32,20 +32,27 @@
 
 .signup-card button {
     width: 97%;
-    padding: 10px;
+    padding: 14px;
     margin-top: 10px;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    background: dodgerblue !important;
     transition: all 0.3s ease;
 }
 
-.signup-card button:hover
+.signup-card .signupBtn:hover
 {
-    background: blue !important;
+    background: darkgreen !important;
 }
 
 .signup-card .message {
     color: red;
+}
+
+.signup-card .backBtn {
+    background-color: dodgerblue !important;
+}
+
+.signup-card .backBtn:hover {
+    background: blue !important;
 }
