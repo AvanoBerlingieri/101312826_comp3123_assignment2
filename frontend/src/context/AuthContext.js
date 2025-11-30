@@ -7,12 +7,14 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         // Check auth status on mount
         axios.get(`${API}/user/checkAuth`, { withCredentials: true })
             .then(res => {
                 setAuthenticated(res.data.status); // true if logged in
+                setUser(res.data.user);
                 setLoading(false);
             })
             .catch(err => {
@@ -23,7 +25,7 @@ export function AuthProvider({ children }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ authenticated, setAuthenticated, loading }}>
+        <AuthContext.Provider value={{ authenticated, setAuthenticated, loading, user, setUser }}>
             {children}
         </AuthContext.Provider>
     );

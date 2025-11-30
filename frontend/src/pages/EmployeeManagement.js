@@ -3,10 +3,14 @@ import {Link, useNavigate} from "react-router-dom";
 import {deleteEmp} from "../api/DeleteEmployee";
 import "./css/EmployeeManagement.css";
 import {getEmp} from "../api/GetEmployees";
+import {logoutUser} from "../api/Logout";
+import {useAuth} from "../context/AuthContext";
 
 export default function EmployeeManagement() {
     // State to hold the list of employees
     const [employees, setEmployees] = useState([]);
+
+    const {setAuthenticated, setUser} = useAuth();
 
     // navigation hook to go to other pages
     const navigate = useNavigate();
@@ -15,11 +19,22 @@ export default function EmployeeManagement() {
     useEffect(() => {
         getEmp()
             .then(data => {
-                // set employees array or empty array if undefined
+                // set the employee array or empty array if undefined
                 setEmployees(data.employees || []);
             })
             .catch(err => console.error(err));
     }, []);
+
+    const handleLogout = async () => {
+        try {
+            await logoutUser();
+            setAuthenticated(false);
+            setUser(null);
+            navigate("/");
+        } catch (err) {
+            console.error("Logout error:", err);
+        }
+    };
 
     // delete employee
     const handleDelete = async (id) => {
@@ -47,6 +62,7 @@ export default function EmployeeManagement() {
             <Link to="/employeeManagement/createEmployee">
                 <button>Create Employee</button>
             </Link>
+            <button onClick={handleLogout} className="logoutBtn">Logout</button>
             <table className="employee-table">
                 <thead>
                 <tr>

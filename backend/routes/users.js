@@ -141,5 +141,17 @@ routes.get("/user/checkAuth", (req, res) => {
     }
 });
 
+// user logout
+routes.post("/user/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax"
+    });
+    res.status(200).send({
+        status: true,
+        message: "Logged out successfully"
+    });
+});
 
 module.exports = routes

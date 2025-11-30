@@ -10,5 +10,4 @@ export async function loginUser(data) {
         },
     });
     return res.data;
-
 }
