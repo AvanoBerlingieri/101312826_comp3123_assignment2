@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import EmployeeManagement from "./pages/EmployeeManagement";
 import CreateEmployee from "./pages/CreateEmployee";
 import EditEmployee from "./pages/EditEmployee";
+import ViewDetails from "./pages/ViewDetails";
 
 export default function App() {
     return (
@@ -14,6 +15,7 @@ export default function App() {
                 <Route path="/employeeManagement" element={<EmployeeManagement/>}/>
                 <Route path="/employeeManagement/createEmployee" element={<CreateEmployee/>}/>
                 <Route path="/employeeManagement/editEmployee/:id" element={<EditEmployee/>}/>
+                <Route path="/employees/:id" element={<ViewDetails/>} />
             </Routes>
         </BrowserRouter>
     );
