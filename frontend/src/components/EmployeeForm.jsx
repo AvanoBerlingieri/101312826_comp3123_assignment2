@@ -51,7 +51,7 @@ const EmployeeForm = ({employee, onChange, onSubmit, buttonText}) => {
 
             <button type="submit">{buttonText}</button>
             <Link to="/employeeManagement">
-                <button>Back</button>
+                <button className={"backBtn"}>Back</button>
             </Link>
         </form>
     );

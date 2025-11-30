@@ -37,7 +37,15 @@
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    background: dodgerblue;
-    color: lightgrey;
+    background: dodgerblue !important;
     transition: all 0.3s ease;
+}
+
+.signup-card button:hover
+{
+    background: blue !important;
+}
+
+.signup-card .message {
+    color: red;
 }

@@ -30,13 +30,23 @@
     font-size: 16px;
 }
 
-.login-card button {
+.login-card button,
+.login-card .signup-link button {
     width: 97%;
     padding: 10px;
     margin-top: 10px;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    background: dodgerblue;
+    background: dodgerblue !important;
     transition: all 0.3s ease;
+}
+
+.login-card button:hover,
+.login-card .signup-link button:hover {
+    background: blue !important;
+}
+
+.login-card .message {
+    color: red;
 }

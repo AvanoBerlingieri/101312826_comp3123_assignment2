@@ -7,8 +7,8 @@
 }
 
 .create-employee-card {
-    width: 450px;
-    padding: 40px;
+    width: 500px;
+    padding: 20px;
     background: white;
     border-radius: 20px;
     text-align: center;
@@ -16,7 +16,8 @@
 
 .create-employee-card h2 {
     margin-bottom: 20px;
-    color: royalblue;
+    color: dodgerblue;
+    font-size: 40px;
 }
 
 .employee-form input {
@@ -34,10 +35,24 @@
     margin: 15px auto;
     border-radius: 10px;
     color: white;
+    background: green !important;
     font-size: 18px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
-.employee-form .Link {
-    background-color: red;
+
+.employee-form button:hover {
+    background: darkgreen !important;
+}
+
+.employee-form .backBtn {
+    background: red !important;
+}
+
+.employee-form .backBtn:hover {
+    background: darkred !important;
+}
+
+.create-employee-card .message {
+    color: red;
 }

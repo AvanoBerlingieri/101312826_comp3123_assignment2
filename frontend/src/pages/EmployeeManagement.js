@@ -32,11 +32,10 @@ export default function EmployeeManagement() {
 
     return (
         <div className="employee-container">
+            <h1>Employee Management</h1>
             <Link to="/employeeManagement/createEmployee">
                 <button>Create Employee</button>
             </Link>
-            <h1>Employee Management</h1>
-
             <table className="employee-table">
                 <thead>
                 <tr>
@@ -54,9 +53,9 @@ export default function EmployeeManagement() {
                         <td>{emp.last_name}</td>
                         <td>{emp.email}</td>
                         <td>
-                            <button onClick={() => navigate(`/employees/${emp._id}`)}>View</button>
-                            <button onClick={() => navigate(`/employees/edit/${emp._id}`)}>Edit</button>
-                            <button onClick={() => handleDelete(emp.id)}>Delete</button>
+                            <button className={"viewBtn"} onClick={() => navigate(`/employees/${emp._id}`)}>View</button>
+                            <button className={"editBtn"} onClick={() => navigate(`/employees/edit/${emp._id}`)}>Edit</button>
+                            <button className={"delBtn"} onClick={() => handleDelete(emp.id)}>Delete</button>
                         </td>
                     </tr>
                 ))}
