@@ -13,7 +13,7 @@ const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://101312826-comp3123-assignment2.vercel.app",
     credentials: true
 }));
 app.use(express.json());
